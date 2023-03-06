@@ -4,6 +4,7 @@ import { useState } from "react";
 
 function App() {
   const [location, setLocation] = useState({});
+  const [searchQuery, setSearchQuery] = useState("");
 
   async function getLocation() {
     const API = `https://us1.locationiq.com/v1/search.php?key=pk.bb29feda391c78027fb7306d762a84ca&q=liverpool&format=json`;
@@ -11,6 +12,11 @@ function App() {
     console.log(res.data[0]);
     setLocation(res.data[0]);
   }
+
+  function handleSearch(event) {
+    setSearchQuery(event.target.value)
+  }
+
   return (
     <div className="App">
       {location.display_name && (
@@ -19,6 +25,7 @@ function App() {
           {location.lon}
         </p>
       )}
+      <input onChange={handleSearch} placeholder="Search for a city" />
       <button onClick={getLocation}>Get Data</button>
     </div>
   );
